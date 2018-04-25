@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Zia Yang" href="">
+        <title>原生JS实现图片懒加载‘ | 超频散热</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif" alt="超频散热" /></a>
+            <h1><a href="/">Zia Yang</a></h1>
+            <p>学习笔记</p>
+            <div id="follow-icons">
+          <a href="http://github.com/ze25800000"><i class="fa fa-github-square fa-2x"></i></a>
+          <a href="http://twitter.com/YzzzzzzE"><i class="fa fa-twitter-square fa-2x"></i></a>
+      </div>
+<h6><a href="/about">About</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  四月 25, 2018
+  
+
+  <h1 class="post-title">原生JS实现图片懒加载‘</h1>
+  <section class="post-content article-entry">
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">    img &#123;</span><br><span class="line">        display: block;</span><br><span class="line">        margin: 0 auto;</span><br><span class="line">        height: 500px;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%281%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%2810%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%2811%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%2812%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%2814%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%2818%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;&quot; data-original=&quot;http://p55grr0fu.bkt.clouddn.com/%E6%95%99%E5%B8%88%20%2826%29.jpg&quot; lazyload=&quot;true&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var viewHeight = document.documentElement.clientHeight</span><br><span class="line"></span><br><span class="line">    function lazyload() &#123;</span><br><span class="line">        var eles = document.querySelectorAll(&apos;img[data-original][lazyload]&apos;)</span><br><span class="line">        console.log(eles[0].getBoundingClientRect())</span><br><span class="line">        Array.prototype.forEach.call(eles, function (item, index) &#123;</span><br><span class="line">            var rect</span><br><span class="line">            if (item.dataset.original === &apos;&apos;) return</span><br><span class="line"></span><br><span class="line">            rect = item.getBoundingClientRect()</span><br><span class="line">            console.log(rect.bottom, &apos;--&apos;, rect.top, &apos;--&apos;, viewHeight)</span><br><span class="line">            if (rect.bottom &gt;= 0 &amp;&amp; rect.top &lt; viewHeight) &#123;</span><br><span class="line">                +function () &#123;</span><br><span class="line">                    var img = new Image()</span><br><span class="line">                    img.src = item.dataset.original</span><br><span class="line">                    img.onload = function () &#123;</span><br><span class="line">                        item.src = img.src</span><br><span class="line">                    &#125;</span><br><span class="line">                    item.removeAttribute(&apos;data-original&apos;)</span><br><span class="line">                    item.removeAttribute(&apos;lazyload&apos;)</span><br><span class="line">                &#125;()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    lazyload()</span><br><span class="line">    document.addEventListener(&apos;scroll&apos;, lazyload)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Zia Yang</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/10/30/webpack配置的几个常见问题/">
+        <!--webpack配置的几个常见问题--> next →
+    </a>
+    
+</nav>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 Zia Yang. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+    </body>
+</html>
+
+

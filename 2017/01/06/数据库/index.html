@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Zia Yang" href="">
+        <title>数据库 | 超频散热</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif" alt="超频散热" /></a>
+            <h1><a href="/">Zia Yang</a></h1>
+            <p>学习笔记</p>
+            <div id="follow-icons">
+          <a href="http://github.com/ze25800000"><i class="fa fa-github-square fa-2x"></i></a>
+          <a href="http://twitter.com/YzzzzzzE"><i class="fa fa-twitter-square fa-2x"></i></a>
+      </div>
+<h6><a href="/about">About</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  一月 6, 2017
+  
+
+  <h1 class="post-title">数据库</h1>
+  <section class="post-content article-entry">
+    <h3 id="数据库的种类"><a href="#数据库的种类" class="headerlink" title="数据库的种类"></a>数据库的种类</h3><h5 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h5><h6 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL:"></a>MySQL:</h6><blockquote>
+<p>优点: 免费,适合中小网站,性能非常不错 <br><br>缺点: 集群，容灾稍微弱一些</p>
+</blockquote>
+<h6 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle:"></a>Oracle:</h6><blockquote>
+<p>银行、大型应用、金融级 <br><br>性能不错、集群、容灾非常强、价格贵</p>
+</blockquote>
+<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><ul>
+<li>赠: INSERT INTO (字段列表) VALUES (值列表)</li>
+<li>删: DELETE FROM 表 WHERE 条件</li>
+<li>改: UPDATE 表 SET 字段=值,字段=值,字段=值… WHERE 条件</li>
+<li>查: SELECT * FROM 表 WHERE 条件</li>
+</ul>
+<h3 id="子句"><a href="#子句" class="headerlink" title="子句"></a>子句</h3><p>子句之间有顺序:<code>WHERE-&gt;GROUP-&gt;ORDER-&gt;LIMIT</code></p>
+<table>
+<thead>
+<tr>
+<th>WHERE</th>
+<th>GROUP</th>
+<th>ORDER</th>
+<th>LIMIT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>筛选</td>
+<td>合并</td>
+<td>排序</td>
+<td>限制</td>
+</tr>
+</tbody>
+</table>
+<h4 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a>WHERE</h4><ul>
+<li>WHERE name=’blue’</li>
+<li>WHERE age&gt;18</li>
+<li>WHERE age&gt;18 AND score&lt;60</li>
+<li>WHERE cach&gt;18 OR score&gt;1000</li>
+</ul>
+<h4 id="ORDER"><a href="#ORDER" class="headerlink" title="ORDER"></a>ORDER</h4><ul>
+<li>ORDER BY age ASC/DESC<blockquote>
+<p>ASC-升序(从小到大)、DESC-降序(从大到小) <br><br>价格(price)升序排序,如果价格相同,再按销量(sales)降序排序<br><br>ORDER BY price ASC, sales DESC</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="GROUP"><a href="#GROUP" class="headerlink" title="GROUP"></a>GROUP</h4><ul>
+<li><p>*统计每个班人数</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">ID	class	name</span><br><span class="line">&quot;1&quot;	&quot;1&quot;	&quot;小明&quot;</span><br><span class="line">&quot;2&quot;	&quot;2&quot;	&quot;小红&quot;</span><br><span class="line">&quot;3&quot;	&quot;1&quot;	&quot;小刚&quot;</span><br><span class="line">&quot;4&quot;	&quot;2&quot;	&quot;小华&quot;</span><br><span class="line">&quot;5&quot;	&quot;3&quot;	&quot;小强&quot;</span><br><span class="line">&quot;6&quot;	&quot;3&quot;	&quot;小四&quot;</span><br><span class="line">&quot;7&quot;	&quot;1&quot;	&quot;小刘&quot;</span><br><span class="line">&quot;8&quot;	&quot;1&quot;	&quot;小花&quot;</span><br><span class="line"></span><br><span class="line">SELECT * FROM student_table;</span><br><span class="line">ID	class	name</span><br><span class="line">&quot;1&quot;	&quot;1&quot;	&quot;小明&quot;</span><br><span class="line">&quot;2&quot;	&quot;2&quot;	&quot;小红&quot;</span><br><span class="line">&quot;3&quot;	&quot;1&quot;	&quot;小刚&quot;</span><br><span class="line">&quot;4&quot;	&quot;2&quot;	&quot;小华&quot;</span><br><span class="line">&quot;5&quot;	&quot;3&quot;	&quot;小强&quot;</span><br><span class="line">&quot;6&quot;	&quot;3&quot;	&quot;小四&quot;</span><br><span class="line">&quot;7&quot;	&quot;1&quot;	&quot;小刘&quot;</span><br><span class="line">&quot;8&quot;	&quot;1&quot;	&quot;小花&quot;</span><br><span class="line"></span><br><span class="line">SELECT * FROM student_table GROUP BY class;</span><br><span class="line">ID	class	name</span><br><span class="line">&quot;1&quot;	&quot;1&quot;	&quot;小明&quot;</span><br><span class="line">&quot;2&quot;	&quot;2&quot;	&quot;小红&quot;</span><br><span class="line">&quot;5&quot;	&quot;3&quot;	&quot;小强&quot;</span><br><span class="line"></span><br><span class="line">SELECT class FROM student_table GROUP BY class;</span><br><span class="line">class</span><br><span class="line">&quot;1&quot;</span><br><span class="line">&quot;2&quot;</span><br><span class="line">&quot;3&quot;</span><br><span class="line"></span><br><span class="line">SELECT class,COUNT(class) FROM student_table GROUP BY class;</span><br><span class="line">class	COUNT(class)</span><br><span class="line">1	4</span><br><span class="line">2	2</span><br><span class="line">3	2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计每个班的平均分</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM student_table</span><br><span class="line">ID	class	name	score</span><br><span class="line">1	1	小明	34</span><br><span class="line">2	2	小红	98</span><br><span class="line">3	1	小刚	26</span><br><span class="line">4	2	小华	99</span><br><span class="line">5	3	小强	18</span><br><span class="line">6	3	小四	95</span><br><span class="line">7	1	小刘	57</span><br><span class="line">8	1	小花	100</span><br><span class="line">SELECT * FROM student_table GROUP BY class;</span><br><span class="line">ID	class	name	score</span><br><span class="line">1	1	小明	34</span><br><span class="line">2	2	小红	98</span><br><span class="line">5	3	小强	18</span><br><span class="line">SELECT class,AVG(score) FROM student_table GROUP BY class;</span><br><span class="line">class	score</span><br><span class="line">1	54.25</span><br><span class="line">2	98.5</span><br><span class="line">3	56.5</span><br><span class="line">每个班级的最高、最低分</span><br><span class="line">SELECT class,MAX(score),MIN(score) FROM student_table GROUP BY class;</span><br><span class="line">class	MAX	MIX</span><br><span class="line">1	80	12</span><br><span class="line">2	98	30</span><br><span class="line">3	91	67</span><br><span class="line">SELECT class,COUNT(class) FROM student_table WHERE score&gt;60 GROUP BY class ORDER BY COUNT(class) DESC LIMIT 2</span><br><span class="line">class COUNT(class)</span><br><span class="line">3	3</span><br><span class="line">1	2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*每个人的消费总额</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ID	name	price</span><br><span class="line">1	blue	3</span><br><span class="line">2	blue	5</span><br><span class="line">3	张三	28000</span><br><span class="line">4	李四	81000</span><br><span class="line">5	blue	4</span><br><span class="line">6	张三	46000</span><br><span class="line">7	李四	38000</span><br><span class="line">8	赵六	18</span><br><span class="line">SELECT name,SUM(price) FROM sales_table GROUP BY name ORDER BY SUM(price) DESC;</span><br><span class="line">name	SUM(price)</span><br><span class="line">李四	119000</span><br><span class="line">张三	74000</span><br><span class="line">赵六	18</span><br><span class="line">blue	12</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Zia Yang</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2017/01/09/ECMAScript6学习总结/">
+        ← prev <!--ECMAScript6学习总结-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/01/04/node学习笔记/">
+        <!--node学习笔记--> next →
+    </a>
+    
+</nav>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 Zia Yang. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+    </body>
+</html>
+
+

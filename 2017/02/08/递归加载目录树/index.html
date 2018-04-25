@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Zia Yang" href="">
+        <title>递归加载目录树 | 超频散热</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif" alt="超频散热" /></a>
+            <h1><a href="/">Zia Yang</a></h1>
+            <p>学习笔记</p>
+            <div id="follow-icons">
+          <a href="http://github.com/ze25800000"><i class="fa fa-github-square fa-2x"></i></a>
+          <a href="http://twitter.com/YzzzzzzE"><i class="fa fa-twitter-square fa-2x"></i></a>
+      </div>
+<h6><a href="/about">About</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  二月 8, 2017
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/node/'>node</a> 
+    
+    </span>
+  
+
+  <h1 class="post-title">递归加载目录树</h1>
+  <section class="post-content article-entry">
+    <h5 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">├.idea</span><br><span class="line">│ ├markdown-navigator</span><br><span class="line">│ │ └─profiles_settings.xml</span><br><span class="line">│ ├─encodings.xml</span><br><span class="line">│ └─workspace.xml</span><br><span class="line">├module</span><br><span class="line">│ ├─calculator.js</span><br><span class="line">│ └─father.js</span><br><span class="line">├node_modules</span><br><span class="line">│ ├iconv-lite</span><br><span class="line">│ │ ├encodings</span><br><span class="line">│ │ │ ├tables</span><br><span class="line">│ │ │ │ ├─big5-added.json</span><br><span class="line">│ │ │ │ └─shiftjis.json</span><br><span class="line">│ │ │ ├─dbcs-codec.js</span><br><span class="line">│ │ │ └─utf7.js</span><br><span class="line">│ │ ├lib</span><br><span class="line">│ │ │ ├─bom-handling.js</span><br><span class="line">│ │ │ └─streams.js</span><br><span class="line">│ │ ├─.npmignore</span><br><span class="line">│ │ └─README.md</span><br><span class="line">├test</span><br><span class="line">│ ├module</span><br><span class="line">│ │ ├─index.js</span><br><span class="line">│ │ └─package.json</span><br><span class="line">│ └─inde.js</span><br><span class="line">├─list.md</span><br><span class="line">└─write1.js</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>首先实现一级目录树</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 引入fs、path模块</span><br><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">// 设置目录</span><br><span class="line">var target = path.join(__dirname, process.argv[2] || &apos;./&apos;);</span><br><span class="line">// 给目录和文件分别设置容器</span><br><span class="line">var dirs = [];</span><br><span class="line">var files = [];</span><br><span class="line">// 使用同步的方法读取目录中的文件和文件夹</span><br><span class="line">var dirInfos = fs.readdirSync(target);</span><br><span class="line">dirInfos.forEach(info =&gt; &#123;</span><br><span class="line">    //通过stat来判断文件或者文件夹</span><br><span class="line">    var stats = fs.statSync(path.join(target, info));</span><br><span class="line">    if (stats.isFile()) &#123;</span><br><span class="line">        files.push(info);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        dirs.push(info);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">dirs.forEach(dir =&gt; &#123;</span><br><span class="line">    console.log(`├$&#123;dir&#125;`);</span><br><span class="line">&#125;);</span><br><span class="line">var count = files.length - 1;</span><br><span class="line">files.forEach(file =&gt; &#123;</span><br><span class="line">    console.log(`$&#123;count--?&apos;├&apos;:&apos;└&apos;&#125;─$&#123;file&#125;`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用递归</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// 引入fs、path模块</span><br><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line">// 设置目录</span><br><span class="line">var target = path.join(__dirname, process.argv[2] || &apos;./&apos;);</span><br><span class="line"></span><br><span class="line">function load(target, depth) &#123;</span><br><span class="line">    // 每递归一次增加一个&apos;│ &apos;</span><br><span class="line">    var prefix = new Array(depth).join(&apos;│ &apos;);</span><br><span class="line">    // 给目录和文件分别设置容器</span><br><span class="line">    var dirs = [];</span><br><span class="line">    var files = [];</span><br><span class="line">    // 使用同步的方法读取目录中的文件和文件夹</span><br><span class="line">    var dirInfos = fs.readdirSync(target);</span><br><span class="line">    dirInfos.forEach(info =&gt; &#123;</span><br><span class="line">        //通过stat来判断文件或者文件夹</span><br><span class="line">        var stats = fs.statSync(path.join(target, info));</span><br><span class="line">        if (stats.isFile()) &#123;</span><br><span class="line">            files.push(info);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            dirs.push(info);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    dirs.forEach(dir =&gt; &#123;</span><br><span class="line">        console.log(`$&#123;prefix&#125;├$&#123;dir&#125;`);</span><br><span class="line">        // 调用自己,直到dirs为空数组时停止调用</span><br><span class="line">        load(path.join(target,dir), depth + 1);</span><br><span class="line">    &#125;);</span><br><span class="line">    var count = files.length - 1;</span><br><span class="line">    files.forEach(file =&gt; &#123;</span><br><span class="line">        console.log(`$&#123;prefix&#125;$&#123;count-- ? &apos;├&apos; : &apos;└&apos;&#125;─$&#123;file&#125;`);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">load(target, 0);</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Zia Yang</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2017/02/16/webpack学习总结/">
+        ← prev <!--webpack学习总结-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/02/08/时间格式转换/">
+        <!--时间格式转换--> next →
+    </a>
+    
+</nav>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 Zia Yang. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+    </body>
+</html>
+
+

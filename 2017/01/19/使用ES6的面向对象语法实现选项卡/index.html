@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Zia Yang" href="">
+        <title>使用ES6的面向对象语法实现选项卡 | 超频散热</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif" alt="超频散热" /></a>
+            <h1><a href="/">Zia Yang</a></h1>
+            <p>学习笔记</p>
+            <div id="follow-icons">
+          <a href="http://github.com/ze25800000"><i class="fa fa-github-square fa-2x"></i></a>
+          <a href="http://twitter.com/YzzzzzzE"><i class="fa fa-twitter-square fa-2x"></i></a>
+      </div>
+<h6><a href="/about">About</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  一月 19, 2017
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/ES6/'>ES6</a> 
+    
+    </span>
+  
+
+  <h1 class="post-title">使用ES6的面向对象语法实现选项卡</h1>
+  <section class="post-content article-entry">
+    <h2 id="基本的选项卡"><a href="#基本的选项卡" class="headerlink" title="基本的选项卡"></a>基本的选项卡</h2><h5 id="css部分"><a href="#css部分" class="headerlink" title="css部分"></a>css部分</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">button.active &#123;</span><br><span class="line">    background-color: orange;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div &#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    background-color: #999;</span><br><span class="line">    display: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div.on &#123;</span><br><span class="line">    display: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="html部分"><a href="#html部分" class="headerlink" title="html部分"></a>html部分</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;span id=&quot;tab1&quot;&gt;</span><br><span class="line">    &lt;button class=&quot;active&quot;&gt;111&lt;/button&gt;</span><br><span class="line">    &lt;button&gt;222&lt;/button&gt;</span><br><span class="line">    &lt;button&gt;333&lt;/button&gt;</span><br><span class="line">    &lt;div class=&quot;on&quot;&gt;111&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;222&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;333&lt;/div&gt;</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="js"><a href="#js" class="headerlink" title="js"></a>js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> class tab &#123;</span><br><span class="line">    constructor(id) &#123;</span><br><span class="line">        var x = document.getElementById(id);</span><br><span class="line">        this.btn = x.getElementsByTagName(&apos;button&apos;);</span><br><span class="line">        this.div = x.getElementsByTagName(&apos;div&apos;);</span><br><span class="line">        this.show();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    hide() &#123;</span><br><span class="line">        for (let i = 0; i &lt; this.btn.length; i++) &#123;</span><br><span class="line">            this.btn[i].className = &apos;&apos;;</span><br><span class="line">            this.div[i].className = &apos;&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    show() &#123;</span><br><span class="line">        for (let i = 0; i &lt; this.btn.length; i++) &#123;</span><br><span class="line">            this.btn[i].onclick = function () &#123;</span><br><span class="line">                this.hide();</span><br><span class="line">                this.btn[i].className = &apos;active&apos;;</span><br><span class="line">                this.div[i].className = &apos;on&apos;;</span><br><span class="line">            &#125;.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">new tab(&apos;tab1&apos;);</span><br></pre></td></tr></table></figure>
+<h2 id="使用继承给选项卡添加自动轮播功能"><a href="#使用继承给选项卡添加自动轮播功能" class="headerlink" title="使用继承给选项卡添加自动轮播功能"></a>使用继承给选项卡添加自动轮播功能</h2><h5 id="js-1"><a href="#js-1" class="headerlink" title="js"></a>js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class tabAuto extends tab &#123;</span><br><span class="line">    constructor(id) &#123;</span><br><span class="line">        super(id);</span><br><span class="line">        this.index = 0;</span><br><span class="line">        setInterval(this.next.bind(this), 500);</span><br><span class="line">    &#125;</span><br><span class="line">    next() &#123;</span><br><span class="line">        this.index++;</span><br><span class="line">        this.index=this.index == this.btn.length ? 0 : this.index;</span><br><span class="line">        for (let i = 0; i &lt; this.btn.length; i++) &#123;</span><br><span class="line">            this.hide();</span><br><span class="line">            this.btn[this.index].className = &apos;active&apos;;</span><br><span class="line">            this.div[this.index].className = &apos;on&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var tab2 = new tabAuto(&apos;tab2&apos;);</span><br></pre></td></tr></table></figure>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Zia Yang</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2017/02/08/时间格式转换/">
+        ← prev <!--时间格式转换-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/01/11/http爬虫/">
+        <!--http爬虫--> next →
+    </a>
+    
+</nav>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 Zia Yang. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+    </body>
+</html>
+
+

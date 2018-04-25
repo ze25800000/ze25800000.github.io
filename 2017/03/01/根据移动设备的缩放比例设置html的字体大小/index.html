@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Zia Yang" href="">
+        <title>根据移动设备的缩放比例动态调整视口大小 | 超频散热</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif" alt="超频散热" /></a>
+            <h1><a href="/">Zia Yang</a></h1>
+            <p>学习笔记</p>
+            <div id="follow-icons">
+          <a href="http://github.com/ze25800000"><i class="fa fa-github-square fa-2x"></i></a>
+          <a href="http://twitter.com/YzzzzzzE"><i class="fa fa-twitter-square fa-2x"></i></a>
+      </div>
+<h6><a href="/about">About</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  三月 1, 2017
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/html-css/'>html/css</a> 
+    
+    </span>
+  
+
+  <h1 class="post-title">根据移动设备的缩放比例动态调整视口大小</h1>
+  <section class="post-content article-entry">
+    <p>一般情况下，我们设置视口标签<code>meta</code>的初始比例是1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=&quot;viewport&quot;</span><br><span class="line">         content=&quot;width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样的话，如果设备的缩放比例<code>devicePixelRatio</code>为2的话，那么意味着手机会用2个物理像素来显示1个像素，一般情况下，在pc中，我们会根据屏幕物理分辨路来设置显示分辨率，用1个物理像素来显示1个实际像素，以达到最佳的显示效果，如果显示分辨率小于物理分辨率（比如1920*1080的屏幕设置成1366*768），则会产生锯齿，画面变得粗糙。同理，在移动端可以通过动态调整缩放比例，来让一个物理像素显示一个实际像素，来达到最佳显示效果，实际案例中，淘宝的移动端就是动态设置缩放比例。</p>
+<h4 id="1-动态设置视口标签"><a href="#1-动态设置视口标签" class="headerlink" title="1.动态设置视口标签"></a>1.动态设置视口标签</h4><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//1. 获取屏幕尺寸</span><br><span class="line">var deviceWidth=document.documentElement.clientWidth;</span><br><span class="line">//2. 设置初始缩放比例</span><br><span class="line">var scale = 1 / window.devicePixelRatio;</span><br><span class="line">//3. 设置meta标签，然后插入dom中</span><br><span class="line">document.write(`&lt;meta name=&quot;viewport&quot;</span><br><span class="line">    content=&quot;width=device-width, user-scalable=no, initial-scale=$&#123;scale&#125;, maximum-scale=$&#123;scale&#125;, minimum-scale=$&#123;scale&#125;&quot;&gt;`);</span><br></pre></td></tr></table></figure>
+</code></pre><h4 id="2-设置html的字体大小"><a href="#2-设置html的字体大小" class="headerlink" title="2.设置html的字体大小"></a>2.设置html的字体大小</h4><p>假设设计稿750px的宽度，里面有一个元素375px，那么这个盒子占屏幕50%宽度，我们需要让这个元素在所有的设备中都占据屏幕的50%。那么我们需要知道设备1%的宽度，然后用50乘以这1%的宽度就得到了50%的宽度，那么把这个1%的宽度设置成<code>html</code>的字体大小，1rem就是设备的1%，50rem就可以占据屏幕的50%<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//4. 得到设备1%的宽度</span><br><span class="line">var width = deviceWidth / 100;</span><br><span class="line">//5. 设置html标签的字体大小</span><br><span class="line">document.getElementsByTagName(&apos;html&apos;)[0].style.fontSize = width + &apos;px&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>但是，当在iphone5等小屏幕设备中，1%的宽度小于12像素，而chrome浏览器能够显示的最小宽度为12px，chrome会把小于12px的字体大小修改为12px，那么50rem就大于50%的宽度了，所以不能用1%作为1rem。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//把100改为10或者其他值,保证font-size的大小大于12px，在淘宝中是除以10</span><br><span class="line">var width = deviceWidth / 10;</span><br><span class="line">//设置html标签的字体大小</span><br><span class="line">document.getElementsByTagName(&apos;html&apos;)[0].style.fontSize = width + &apos;px&apos;;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-配合less进行换算"><a href="#3-配合less进行换算" class="headerlink" title="3.配合less进行换算"></a>3.配合less进行换算</h4><p>为了使设计稿中375的元素依然在屏幕中占50%，一个方便的算法是，元素的宽度/设计稿的十分之一就是元素的大小<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//设计稿宽度是750px</span><br><span class="line">div&#123;</span><br><span class="line">    width: 375/75rem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Zia Yang</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2017/03/09/关于Promise的几个基础demo/">
+        ← prev <!--关于Promise的几个基础demo-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/02/23/node-mongodb的DAO层封装/">
+        <!--node-mongodb的DAO层封装--> next →
+    </a>
+    
+</nav>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 Zia Yang. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+    </body>
+</html>
+
+

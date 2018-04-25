@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Zia Yang" href="">
+        <title>node-mongodb的DAO层封装 | 超频散热</title>
+        <meta name="description" content="{{meta_description}}">
+
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+    
+		<body class="post-template">
+	
+
+        <header id="header">
+            <a id="logo" href="/"><img src="http://p0mvyl5ro.bkt.clouddn.com/timg%20%281%29.gif" alt="超频散热" /></a>
+            <h1><a href="/">Zia Yang</a></h1>
+            <p>学习笔记</p>
+            <div id="follow-icons">
+          <a href="http://github.com/ze25800000"><i class="fa fa-github-square fa-2x"></i></a>
+          <a href="http://twitter.com/YzzzzzzE"><i class="fa fa-twitter-square fa-2x"></i></a>
+      </div>
+<h6><a href="/about">About</a></h6>
+        </header>
+
+        <main id="content">
+        
+
+<article class="post">
+  二月 23, 2017
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/node/'>node</a> 
+    
+    </span>
+  
+
+  <h1 class="post-title">node-mongodb的DAO层封装</h1>
+  <section class="post-content article-entry">
+    <h3 id="实现增删改查，添加索引值，获取数据的数量等功能"><a href="#实现增删改查，添加索引值，获取数据的数量等功能" class="headerlink" title="实现增删改查，添加索引值，获取数据的数量等功能"></a>实现增删改查，添加索引值，获取数据的数量等功能</h3><p><a href="http://mongodb.github.io/node-mongodb-native/2.2/quick-start/quick-start/" target="_blank" rel="noopener">node-mongodb</a></p>
+<ul>
+<li>在model文件夹中新建db.js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">const MongoClient = require(&apos;mongodb&apos;).MongoClient;</span><br><span class="line">function _conection(callback) &#123;</span><br><span class="line">    var url = &apos;mongodb://localhost:27017/shuoshuo&apos;;</span><br><span class="line">    MongoClient.connect(url, (err, db) =&gt; &#123;</span><br><span class="line">        callback(err, db);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">init();</span><br><span class="line">//增加索引</span><br><span class="line">function init() &#123;</span><br><span class="line">    _conection((err, db) =&gt; &#123;</span><br><span class="line">        db.collection(&apos;users&apos;).createIndex(</span><br><span class="line">            &#123;&quot;username&quot;: 1&#125;,</span><br><span class="line">            null,</span><br><span class="line">            (err, result) =&gt; &#123;</span><br><span class="line">                if (err) &#123;</span><br><span class="line">                    console.error(err);</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                db.close();</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.insertMany = function (collectionName, json, callback) &#123;</span><br><span class="line">    _conection((err, db) =&gt; &#123;</span><br><span class="line">        db.collection(collectionName).insertMany(json, (err, result) =&gt; &#123;</span><br><span class="line">            callback(err, result);</span><br><span class="line">            db.close();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">exports.find = function (collectionName, json, C, D) &#123;</span><br><span class="line">    if (arguments.length == 3) &#123;</span><br><span class="line">        var callback = C;</span><br><span class="line">        var limitAmount = 0;</span><br><span class="line">        var skipAmount = 0;</span><br><span class="line">    &#125; else if (arguments.length == 4) &#123;</span><br><span class="line">        var callback = D;</span><br><span class="line">        var args = C;</span><br><span class="line">        var limitAmount = args.pageAmount || 0;</span><br><span class="line">        var skipAmount = args.pageAmount * args.page || 0;</span><br><span class="line">        var sort = args.sort || &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    _conection((err, db) =&gt; &#123;</span><br><span class="line">        var tmp = db.collection(collectionName).find(json).limit(limitAmount).skip(skipAmount).sort(sort);</span><br><span class="line">        tmp.toArray((err, docs) =&gt; &#123;</span><br><span class="line">            callback(err, docs);</span><br><span class="line">            db.close();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line">exports.deleteMany = function (collectionName, json, callback) &#123;</span><br><span class="line">    _conection((err, db) =&gt; &#123;</span><br><span class="line">        db.collection(collectionName).deleteMany(json, (err, result) =&gt; &#123;</span><br><span class="line">            callback(err, result);</span><br><span class="line">            db.close();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">exports.update = function (collectionName, json1, json2, callback) &#123;</span><br><span class="line">    _conection((err, db) =&gt; &#123;</span><br><span class="line">        db.collection(collectionName).updateMany(json1, json2, (err, result) =&gt; &#123;</span><br><span class="line">            callback(err, result);</span><br><span class="line">            db.close();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line">exports.getCount = function (collectionName, callback) &#123;</span><br><span class="line">    _conection((err, db) =&gt; &#123;</span><br><span class="line">        db.collection(collectionName).find().count().then((count) =&gt; &#123;</span><br><span class="line">            callback(count);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Zia Yang</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
+</article>
+
+<nav class="pagination" role="pagination">
+    
+    <a class="newer-posts" href="/2017/03/01/根据移动设备的缩放比例设置html的字体大小/">
+        ← prev <!--根据移动设备的缩放比例动态调整视口大小-->
+    </a>
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2017/02/16/webpack学习总结/">
+        <!--webpack学习总结--> next →
+    </a>
+    
+</nav>
+
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2018 Zia Yang. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+    </body>
+</html>
+
+
